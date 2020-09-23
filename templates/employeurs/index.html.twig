@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Accueil Employeur
+{% endblock %}
+
+{% block body %}	
+
+<main>
+	
+	<div class="container mt-5">
+		
+		<p>Bienvenue <strong>{{ employeur.nom }}</strong></p>
+
+		<div class="row">
+
+			<div class="col-sm-12 mb-5 text-center">
+				<h3>Vos informations personnelles</h3>	
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-6">
+				<h4>Informations de l'entreprise</h4>
+				<p>Entreprise : <strong>{{ employeur.nom }}</strong></p>
+				<p>Secteur : <strong>{{ employeur.domaine }}</strong></p>
+				<p>Employés : <strong>{{ employeur.nbEmploye }}</strong></p>
+				<p>Email : <strong>{{ employeur.email }}</strong></p>
+			</div>
+
+			<div class="col-sm-6">
+				<h4>Adresse</h4>
+				<p>Rue : <strong>{{ employeur.adresse }}</strong></p>				
+				<p>Code postal : <strong>{{ employeur.codePostal }}</strong></p>
+				<p>Ville : <strong>{{ employeur.ville}}</strong></p>	
+			</div>
+
+			<a href="{{ path('employeur_edit_infos', {'id': employeur.id }) }} " class="btn btn-warning ">Modifier vos donnnées personnelles</a>
+
+		</div>
+
+		<div class="row mt-5">
+
+			<div class="col-sm-8">
+
+				<h4>Liste de vos offres</h4>
+				
+				{% for offre in offres %}
+					<div class="list-group">
+						<a href="{{ path('employeur_edit_offre', {'id': offre.id } ) }}" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{offre.titre}}</h5>
+								<small>{{ offre.createAt |date ('Y-m-d') }}</small>
+							</div>
+							<p class="mb-1">{{ offre.description | u.truncate(180, '...') }}</p>
+							<small>{{ offre.typeContrat }}</small>
+						</a>
+						<a href="{{ path('employeur_delete_offre', {'id': offre.id } ) }}" class="btn btn-primary mt-2 mb-5" 
+							onclick="event.preventDefault(); confirm('Êtes vous sûres de vouloir supprimer cette offre ?') && 
+							document.getElementById('delete_offre_form').submit();">Supprimer l'offre
+						</a>
+					</div>
+
+					<form id="delete_offre_form" action="{{ path('employeur_delete_offre', {'id': offre.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE" style="display: none;">
+					</form>
+					
+				{% endfor %}   
+				
+			</div>
+
+			<div class="col-sm-4 text-center mt-5">
+				<a href="{{ path('employeur_create_offre') }}" class="btn btn-primary">Créer une nouvelle offre</a>
+			</div>
+
+		</div>
+
+	</div>
+
+</main>
+
+{% endblock %}

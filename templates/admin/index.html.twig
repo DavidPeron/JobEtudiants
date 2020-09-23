@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+	<div class="container text-center col-md-6 mt-5 pb-5 bg-sweet">
+
+		<h1 class="text-center mt-5 mb-5">Espace administration</h1>
+
+		<p>
+			<a href={{ path('admin_utilisateur') }}  class="btn btn-secondary btn-lg btn-block">Liste des utilisateurs</a>
+		</p>
+		<p>
+			<a href={{ path('admin_offres') }}  class="btn btn-secondary btn-lg btn-block">Listes des offres</a>
+		</p>
+		<p>
+			<a href={{ path('admin_demandes') }}  class="btn btn-secondary btn-lg btn-block mb-3">Listes des demandes</a>
+		</p>
+	</div>
+
+</main>
+
+{% endblock %}

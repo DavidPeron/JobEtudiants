@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+	<form method="post">
+
+		<div class="form-group container text-center col-sm-8 col-md-6 col-lg-6">
+
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+
+			<h1 class="h3 mt-5 font-weight-normal">Connectez-vous</h1>
+
+			<label for="inputEmail">Email</label>
+			<input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
+
+			<label for="inputPassword">Password</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" required>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<button class="btn btn-lg btn-primary mt-2" type="submit">
+				Connexion
+			</button>
+
+		</div>
+
+	</form>
+
+</main>
+
+{% endblock %}

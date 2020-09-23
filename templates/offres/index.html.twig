@@ -1,0 +1,52 @@
+{% extends 'layouts/fond.html.twig' %}
+
+{% block title %}Offres
+{% endblock %}
+
+{% block body %}
+
+	<main>
+		
+		<div class="container mt-2">
+	
+			<h1 class="text-center">Liste des Offres</h1>
+		
+			{{ include('layouts/partials/recherche.html.twig') }}
+		
+
+			<div class="row">
+			
+				<div class="container bg-sweet mb-3 mr-3 ml-3">
+				
+					<div class="list-group ">
+						{% for offre in offre %}
+						
+							<div class="d-flex w-100 justify-content-between pt-3">
+								<h5 class="mb-1">{{ offre.titre }}</h5>
+								<small>Publié le {{ offre.createAt|date('d/m/Y')}}</small>
+								
+							</div>
+							<small><strong>{{ offre.domaine}}</strong></small>
+							<p class="mb-1">{{ offre.description | u.truncate(250, '...' ) }}</p>
+
+							<div class="d-flex w-100 justify-content-between mb-2 trait">
+								<strong>{{ offre.localisation }} {{ offre.codePostal}}</strong>
+								<a href="{{ path('show_offre', {'id': offre.id }) }}" class="btn btn-primary mb-2">Voir l'annonce</a>
+							</div>
+						
+						{% endfor %}
+					</div>
+
+					<div class="pagination">
+						{{ knp_pagination_render(offre) }}
+					</div>
+													
+				</div>
+				
+			</div>
+
+		</div>
+		
+	</main>
+
+{% endblock %}

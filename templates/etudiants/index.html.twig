@@ -1,0 +1,107 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Accueil Etudiant
+{% endblock %}
+
+{% block body %}	
+
+<main>
+	
+	<div class="container mt-5">
+		
+		<p>Bienvenue <strong>{{etudiant.prenom ~ ' ' ~ etudiant.nom }}</strong></p>
+
+		<div class="row">
+
+			<div class="col-sm-12 mb-5 text-center">
+				<h2>Votre compte</h2>	
+			</div>
+
+		</div>
+
+		<div class="row text-center mb-5">
+
+			<div class="container col-sm-8">
+		
+				<h3>Présentation de vous et de votre projet</h3>
+
+				<p>{{ etudiant.description }}</p>
+
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-6">
+                <div>
+                    <h4>Informations personnelles</h4>
+                    <p>Nom <strong>{{ etudiant.nom }}</strong></p>
+                    <p>Prenom <strong>{{ etudiant.prenom }}</strong></p>
+                    <p>Date de Naissance <strong>{{ etudiant.dateDeNaissance|date('m/d/Y') }}</strong></p>
+                    <p>Email <strong>{{ etudiant.email }}</strong></p>
+					<p>Numéro de téléphone <strong>{{ etudiant.telephone }}</strong></p>
+					<p>Domaine d'activité <strong>{{ etudiant.domaine }}</strong></p>
+                </div>
+			</div>
+
+			<div class="col-sm-6">
+				<h4>Adresse</h4>
+				<p>Rue <strong>{{ etudiant.adresse }}</strong></p>				
+				<p>CP <strong>{{ etudiant.codePostal }}</strong></p>
+				<p>Ville <strong>{{ etudiant.ville }}</strong></p>
+			</div>
+
+			<a href="{{ path('etudiant_edit_infos', {'id': etudiant.id }) }}" class="btn btn-warning ml-3">Modifier vos donnnées personnelles</a>
+
+		</div>
+
+		<div class="row mt-5">
+
+			<div class="col-sm-8">
+
+				<h4>Liste de vos demandes</h4>
+				
+				{% for demande in demandes %}
+				
+					<div class="list-group mb-5">
+
+						<a href="{{ path('etudiant_edit_demande', {'id': demande.id } ) }}" class="list-group-item list-group-item-action">
+
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{demande.titre}}</h5>
+								<small>{{ demande.createAt |date("d/m/Y") }}</small> 
+							</div>
+
+							<p class="mb-1">{{ demande.description | u.truncate(200, '...') }}</p>
+
+							<small>{{ demande.telephone }}</small>
+                            <small>{{ demande.email }}</small>
+						</a>
+
+						<a href="{{ path('etudiant_delete_demande', {'id': demande.id } )}}" class="btn btn-primary mt-2 mb-2" 
+						onclick="event.preventDefault();
+						confirm('Êtes vous sûres de vouloir supprimer cette demande ?') &&
+						document.getElementById('delete_demande_form').submit();">Supprimer la demande
+						</a>
+
+					</div>
+
+					<form id="delete_demande_form" action="{{ path('etudiant_delete_demande', {'id': demande.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE" style="display: none;">
+					</form>
+					
+				{% endfor %}   
+				
+			</div>
+
+			<div class="col-sm-4 text-center mt-5">
+				<a href="{{ path('etudiant_create_demande') }}" class="btn btn-primary">Créer une nouvelle demande</a>
+			</div>
+
+		</div>
+
+	</div>
+
+</main>
+
+{% endblock %}

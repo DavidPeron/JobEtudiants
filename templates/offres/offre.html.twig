@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Offre
+{% endblock %}
+
+{% block body %}
+
+	<main>
+		
+		<div class="row ">
+
+            <div class="col-md-6 mx-auto">
+            
+                <h2 class="mt-5 ">{{ offre.titre }} en {{ offre.typeContrat }}</h2>
+                <h3 class="mt-5 ">Domaine : {{ offre.domaine }}</h3>
+                
+                <h4 class="mt-5 ">{{ offre.localisation }} {{ offre.codePostal }}</h4>
+                
+                <p>{{ offre.description }}</p>
+                {% if is_granted("ROLE_ETUDIANT") %}
+                <p>Si cette offre vous intéresse, contactez nous à l'adresse suivant : <a href="mailto: {{ offre.email }}">{{ offre.email }}</a></p>
+                {% endif %}
+                <div class="d-flex w-100 justify-content-between">                 
+                    <a href="{{ path('offres')}}" class="btn btn-warning">Retour aux offres</a>
+                </div>
+            </div>
+	
+		</div>
+		
+	</main>
+
+{% endblock %}

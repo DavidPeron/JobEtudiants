@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Offres
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+	<div class="container mt-2">
+
+		<h1 class="text-center mb-5">Liste des offres</h1>
+
+		<table class="table">
+
+			<thead>
+
+				<th>ID</th>
+				<th>Titre</th>			
+				<th>localisation</th>
+				<th>Contrat</th>
+				<th>domaine</th>
+				<th>codePostal</th>
+				<th>Modifier</th>
+				<th>Supprimer</th>
+
+			</thead>
+
+			<tbody>
+
+				{% for offre in offres %}
+
+					<tr>
+						<td>{{ offre.id }}</td>
+
+						<td>{{ offre.Titre }}</td>					
+
+						<td>{{ offre.Localisation }}</td>
+
+						<td>{{ offre.typeContrat }}</td>
+
+						<td>{{ offre.domaine }}</td>
+
+						<td>{{ offre.codePostal }}</td>
+
+						<td>
+							<a href="{{ path('admin_offre_modifier', {'id': offre.id} ) }}" class="btn btn-warning">Modifier</a>
+						</td>
+						<td>
+							<a href="{{ path('admin_offre_supprimer', {'id': offre.id} ) }}" class="btn btn-warning"
+							onclick="event.preventDefault(); confirm('Êtes vous sûres de vouloir supprimer cette offre ?') && document.getElementById('delete_offre_form').submit();">Supprimer</a>
+						</td>
+
+					</tr>
+
+					<form id="delete_offre_form" action="{{ path('admin_offre_supprimer', {'id': offre.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE" style="display: none;">
+					</form>
+
+				{% else %}
+					<tr>
+						<td colspan="5">Il n'y a pas d'offres en ligne sur le site</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+			
+		</table>
+
+		<a href="{{ path('admin_gestion') }}" class="btn btn-warning">Retour</a>
+
+	</div>
+
+</main>
+
+{% endblock %}

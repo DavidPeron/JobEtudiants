@@ -1,0 +1,76 @@
+{% extends 'layouts/fond.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+
+{% block body %}
+
+<main>
+
+	<div class="container mt-5">
+
+		<div class="row bg-sweet p-3 mt-5 mb-5">
+
+			<div class="col-sm-6">
+				<h3 class="text-center">Etudiant</h3>
+				<p>En recherche d'un premier job, sur JobEtudiants.fr vous trouverez forcément un job qui vous correspond avec plus de 
+				1500 employeurs actifs par jour nos offres sont mise à jour régulièrement...</p>
+				<p><a href="{{ path('offres')}}" class="btn btn-secondary btn-sm">Les offres sont par ici !</a></p>		
+			</div>
+
+			<div class="col-sm-6">
+				<h3 class="text-center">Employeur</h3>
+				<p>Venez postez une annonce gratuitement ... tous les jours de nouveaux étudiants s'inscrivent sur JobEtudiants.fr, vous
+				trouverez forcément la personne qui vous manque ...</p>
+				<p><a href="{{ path('inscription')}}" class="btn btn-secondary btn-sm">L'inscription c'est par ici !</a></p>		
+			</div>
+			
+		</div>
+
+		<div class="row mt-5 bg-sweet">
+
+			<div class="col-sm-7">
+
+				<h3 class="text-center pt-3">Dernières offres publiées</h3>
+
+				<div class="list-group pr-3 pl-3 pb-3">
+					{% for offre in offres %}
+
+					<hr>
+						<div class="d-flex w-100 justify-content-between mt-2">
+							<h5 class="mb-3">{{ offre.titre }}</h5>
+							<small>Publié le {{ offre.createAt|date('d/m/Y')}}</small>			
+						</div>
+
+						<p class="mb-1">{{ offre.description | u.truncate(200, '...') }}</p>
+
+						<div class="d-flex w-100 justify-content-between mb-2 trait">
+							<strong>{{ offre.localisation }} {{ offre.codePostal}}</strong>					
+						</div>
+					
+					{% endfor %}
+				</div>
+			
+			</div>
+
+			<div class="col-sm-5 mt-5 mb-3">
+
+				<h3>Quelques chiffres concernant le site </h3>
+
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Nombres d'employeurs : {{ employeurs|length}}</li>
+					<li class="list-group-item">Nombres d'étudiant : {{ etudiants|length}}</li>
+					<li class="list-group-item">Nombres d'offres : {{ nbOffres|length }}</li>
+					<li class="list-group-item">Nombres de demandes : {{ demandes|length}}</li>
+				</ul>					
+
+			</div>
+
+		</div>
+
+	</div>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+
+    <div class="container text-center">
+
+        <span class="navbar-brand" href="#">
+            <img src="{{ asset('build/images/Logo-emploi.png') }}" alt="Logo emploi" width="60" height="60" class="nav navbar-nav navbar-left">
+        </span> 
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample03">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                 <a class="nav-link" href="{{path('accueil')}}">Accueil <span class="sr-only"></span></a>         
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('offres') }}">Offres
+                    </a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('demandes') }}">Demandes
+                    </a>
+                </li>
+                {% if is_granted("ROLE_EMPLOYEUR") %}
+                <li class="nav-item active">      
+                    <a class="nav-link" href="{{ path('liste_etudiants') }}">Etudiants
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right ">
+                {% if not app.user %}
+                    <li class="nav-item active">
+                        <a href="{{ path('inscription') }}" class="nav-link">
+                            Inscription</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a href="{{ path('connexion') }}" class="nav-link">
+                            Connexion</a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item active">
+                        <a href="{{ path('deconnexion') }}" class="nav-link">
+                            Deconnexion</a>
+                    </li>
+
+                {% endif %}
+
+                <li class="nav-item active">
+
+                    {% if is_granted("ROLE_ADMIN") %}
+
+                        <a href="{{ path('admin_gestion') }}" class="nav-link">Administrateur</a>
+                            
+                    {% elseif is_granted("ROLE_ETUDIANT") %}
+
+                        <a href="{{ path('compte_etudiant') }}" class="nav-link">Mon compte</a>
+
+                    {% elseif is_granted("ROLE_EMPLOYEUR") %}
+
+                        <a href="{{ path('compte_employeur') }}" class="nav-link">Mon compte</a>
+
+                    {% endif %}
+                    
+                </li>	
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>

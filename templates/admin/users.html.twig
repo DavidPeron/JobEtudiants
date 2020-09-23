@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+	<div class="container mt-5">
+
+		<h1 class="text-center mb-5">Liste des utilisateurs</h1>
+
+		<table class="table">
+
+			<tbody>
+
+				<thead>
+
+					<th>ID</th>
+					<th>Email</th>
+					<th>Rôles</th>
+					<th>Modifier</th>
+					<th>Supprimer</th>
+
+				</thead>
+
+				{% for user in user %}
+
+					<tr>
+						<td>{{ user.id }}</td>
+
+						<td>{{ user.email }}</td>
+
+						<td>
+							{% for role in user.roles %}
+
+								{% if role == "ROLE_ADMIN" %}
+									Administrateur
+								{% elseif role == "ROLE_ETUDIANT" %}
+									Etudiant
+								{% elseif role == "ROLE_EMPLOYEUR" %}
+									Employeur
+								{% endif %}
+
+							{% endfor %}
+						</td>
+
+						<td>
+							<a href="{{ path('admin_utilisateur_modifier', {'id': user.id} ) }}" class="btn btn-warning">Modifier</a>
+						</td>
+						<td>
+							<a href="{{ path('admin_utilisateur_supprimer', {'id': user.id} ) }}" class="btn btn-warning"
+							onclick="event.preventDefault(); confirm('Êtes vous sûres de vouloir supprimer cet utilisateur ?') && 
+							document.getElementById('delete_user_form').submit();">Supprimer</a>
+						</td>
+
+					</tr>
+
+					<form id="delete_user_form" action="{{ path('admin_utilisateur_supprimer', {'id': user.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE" style="display: none;">
+					</form>
+
+				{% else %}
+
+					<tr>
+						<td colspan="5">Il n'y a pas d'utilisateur inscrit sur le site</td>
+					</tr>
+
+				{% endfor %}
+
+			</tbody>
+			
+		</table>
+
+		<a href="{{ path('admin_gestion') }}" class="btn btn-warning">Retour</a>
+
+	</div>
+
+</main>
+
+{% endblock %}

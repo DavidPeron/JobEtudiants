@@ -1,0 +1,78 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Demandes
+{% endblock %}
+
+{% block body %}
+
+
+<main>
+
+	<div class="container mt-5">
+
+		<h1 class="text-center mb-5">Liste des demandes</h1>
+
+		<table class="table">
+
+			<thead>
+
+				<th>ID</th>
+				<th>Titre</th>		
+				<th>Telephone</th>
+				<th>email</th>
+				<th>codePostal</th>
+				<th>Modifier</th>
+				<th>Supprimer</th>
+
+			</thead>
+
+			<tbody>
+
+				{% for demande in demandes %}
+
+					<tr>
+						<td>{{ demande.id }}</td>
+
+						<td>{{ demande.Titre }}</td>				
+
+						<td>{{ demande.Telephone }}</td>
+
+						<td>{{ demande.email }}</td>
+
+						<td>{{ demande.codePostal }}</td>
+
+						<td>
+							<a href="{{ path('admin_demande_modifier', {'id': demande.id} ) }}" class="btn btn-warning"
+							>Modifier</a>
+						</td>
+
+						<td>
+							<a href="{{ path('admin_demande_supprimer', {'id': demande.id} ) }}" class="btn btn-warning"
+							onclick="event.preventDefault(); confirm('Êtes vous sûres de vouloir supprimer cette demande ?') && 
+							document.getElementById('delete_demande_form').submit();">Supprimer</a>
+						</td>
+					</tr>
+
+					<form id="delete_demande_form" action="{{ path('admin_demande_supprimer', {'id': demande.id}) }}" method="post">
+						<input type="hidden" name="_method" value="DELETE" style="display: none;">
+					</form>
+
+				{% else %}
+
+					<tr>
+						<td colspan="5">Il n'y a pas de demandes en ligne sur le site</td>
+					</tr>
+
+				{% endfor %}
+
+			</tbody>
+			
+		</table>
+
+		<a href="{{ path('admin_gestion') }}" class="btn btn-warning">Retour</a>
+
+	</div>
+
+</main>
+
+{% endblock %}

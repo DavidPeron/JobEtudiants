@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Liste des étudiants
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+    <div class="container mt-5">
+
+        <h1 class="text-center mb-5">Liste des étudiants</h1>
+
+        {% for etudiant in etudiants %}
+
+        <div class="row list-group">
+
+            <div class="list-group-item mb-3 bg-sweet">
+                
+                <h4 class="text-center"> <strong>{{ etudiant.nom }} {{ etudiant.Prenom }}</strong></h4>
+                
+                <p><strong>Domaine : </strong>{{ etudiant.domaine }}</p>
+                <p>{{ etudiant.Description }}</p>     
+                <p><strong>Numéro de téléphone : </strong>{{ etudiant.telephone }}</p>
+                <p><strong>Adresse e-mail : </strong>{{ etudiant.email }}</p>
+
+            </div>
+        
+        </div>
+
+        {% endfor %}
+        
+    </div>
+
+</main>
+
+{% endblock %}

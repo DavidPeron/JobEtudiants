@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	<form method="post">
+
+		<div class="form-group container text-center col-sm-8 col-md-6 col-lg-6">
+
+			<h1 class="mt-5 h2">Formulaire d'inscription</h1>
+
+			{{ form_start(registrationForm) }}
+
+			{{ form_row(registrationForm.email) }}
+
+			{{ form_row(registrationForm.plainPassword.first) }}
+
+			{{ form_row(registrationForm.plainPassword.second) }}
+
+			{{ form_row(registrationForm.choix, {label: 'Vous êtes ?'}) }}
+
+			{{ form_row(registrationForm.conditionsUtilisations, {label: 'Je confirme avoir lu et j\'accepte les conditions d\'utilisations '}) }}
+
+			<button class="btn btn-lg btn-primary mt-2" type="submit">
+				Inscription
+			</button>
+
+			{{ form_end(registrationForm) }}
+
+		</div>
+		
+	</form>
+
+</main>
+
+{% endblock %}

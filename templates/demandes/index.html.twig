@@ -1,0 +1,51 @@
+{% extends 'layouts/fond.html.twig' %}
+
+{% block title %}Demandes
+{% endblock %}
+
+{% block body %}
+
+<main>
+	
+	<div class="container mt-2">
+
+		<h1 class="text-center">Liste des Demandes</h1>
+									
+		{{ include('layouts/partials/recherche.html.twig') }}
+
+		<div class="row">
+		
+			<div class="container bg-sweet mb-3 mr-3 ml-3">
+			
+				<div class="list-group">
+					{% for demande in demandes %}
+					
+						<div class="d-flex w-100 justify-content-between pt-3">
+							<h5 class="mb-1">{{ demande.titre }} (<small>{{ demande.codePostal }}</small>)</h5>								
+							<small>Publié le {{ demande.createAt|date('d/m/Y')}}</small>		
+						</div>
+						<small><strong>{{ demande.domaine}}</strong></small>
+						<p class="mb-1">{{ demande.description | u.truncate(250, '...' ) }}</p>
+
+						<div class="d-flex w-100 justify-content-between mb-2 trait">
+							<strong>{{ demande.email}}</strong>
+							<a href="{{ path('show_demande', {'id': demande.id }) }}" class="btn btn-primary mb-2 ">Voir l'annonce</a>
+						</div>
+					
+					{% endfor %}
+				</div>
+
+				<div class="pagination">
+					{{ knp_pagination_render(demandes) }}
+				</div>
+												
+			</div>
+			
+		</div>
+
+	</div>
+	
+</main>
+
+{% endblock %}
+
